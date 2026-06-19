@@ -1,35 +1,117 @@
-html{
+/* --- Base / Mobile View (Mobile First) --- */
+html {
     scroll-behavior: smooth;
 }
+
 body {
     background-color: #dedede;
     padding: 5px;
     margin: 15px;
     font-size: 25px;
-    font-family:Arial, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 h1 {
     text-align: center;
-    font-family:Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 1.95em;
 }
 
-h2{
-    text-align:center;
-  }
+h2 {
+    text-align: center;
+}
 
-li{
+li {
     margin-top: 20px;
 }
 
-img{
+/* Base image styling */
+img {
     border: 5px solid blue;
     border-radius: 35px;
     width: 100%;
-  }
+    display: block; /* Prevents unwanted baseline spacing */
+}
 
-.label{
+/* Mobile Layout: 1 column grid, 10px gap */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.label {
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+/* --- Media Query 1: Tablet View (min-width: 772px) --- */
+@media (min-width: 772px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Making figures circular by giving them equal aspect ratio and 50% border radius */
+    .grid figure {
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    /* Target images inside figures to make sure they match the shape */
+    .grid figure img {
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    /* Set the last figure (9th item) to take up both columns */
+    .grid figure:last-child {
+        grid-column: span 2;
+        aspect-ratio: auto; /* Reset aspect ratio so it spans cleanly across 2 columns */
+    }
+}
+
+
+/* --- Media Query 2: Large Screen View (min-width: 992px) --- */
+@media (min-width: 992px) {
+    /* Reset layout for larger views or specify column sizes if preferred */
+    .grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    /* Remove border radius from all figures and images */
+    .grid figure, 
+    .grid figure img {
+        border-radius: 0;
+        aspect-ratio: auto; 
+        height: auto;
+    }
+
+    /* Set every third figure to take up both columns */
+    .grid figure:nth-child(3n) {
+        grid-column: span 2;
+    }
+}
+
+
+/* --- Media Query 3: Prefers Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+
+/* --- Media Query 4: Dark Color Scheme --- */
+@media (prefers-color-scheme: dark) {
+    .grid figure {
+        background-color: #222222; /* Dark background */
+        color: #fffae0;            /* Light, yellowish font color */
+    }
+    
+    .grid figure img {
+        border-color: #000000;    /* Black border color */
+    }
 }
